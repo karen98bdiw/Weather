@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="todaysWeaterBlockBackground">#FFB103</color>
+    <color name="mainActivityBackground">#DFDCD8</color>
+    <color name="todaysWeaterBlock_text">#FFFFFF</color>
+    <color name="comingDaysWeatherText">#000000</color>
+    <color name="comingDaysWeatherBlockBorder">#000000</color>
+    <color name="refreshBtnBackgroundColor">#70307A</color>
+</resources>
