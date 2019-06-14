@@ -28,6 +28,10 @@
         android:layout_height="wrap_content"
         android:text="SKIP"
         android:layout_below="@id/introText"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:background="@drawable/refresh_btn_look"
         />
 
 </RelativeLayout>
