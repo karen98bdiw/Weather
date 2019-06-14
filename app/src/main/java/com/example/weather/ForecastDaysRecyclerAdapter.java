@@ -28,8 +28,8 @@ public class ForecastDaysRecyclerAdapter extends RecyclerView.Adapter<ForecastDa
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.coming_days_weather_recycler_item,viewGroup,false);
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        View view = layoutInflater.inflate(R.layout.coming_days_weather_recycler_item,viewGroup,false);
         return new ViewHolder(view);
     }
 
