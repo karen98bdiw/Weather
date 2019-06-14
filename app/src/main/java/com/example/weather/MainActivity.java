@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.weather.CurentDayWeatherApiResponseInterface.ResponseForCurentDay;
 import com.example.weather.FiveDayForecastWeatherAPIResponseInterface.MyList;
 import com.example.weather.FiveDayForecastWeatherAPIResponseInterface.Response;
 import com.google.gson.Gson;
