@@ -2,7 +2,7 @@ package com.example.weather;
 
 import java.util.List;
 
-public class OneDayWeather  {
+public class WeatherForecast {
 
     private String dayName;
     private String weatherIcon;
@@ -11,11 +11,11 @@ public class OneDayWeather  {
     private int maxTemp;
     private String nightIcon;
     private String nightWeatherKind;
-    private String hour;
+    private String date;
 
 
 
-    public OneDayWeather(String dayName, String weatherIcon, String weatherKind, int minTemp, int maxTemp, String nightIcon, String nightWeatherKind) {
+    public WeatherForecast(String dayName, String weatherIcon, String weatherKind, int minTemp, int maxTemp, String nightIcon, String nightWeatherKind) {
         this.weatherIcon = weatherIcon;
         this.weatherKind = weatherKind;
         this.minTemp = minTemp;
@@ -57,11 +57,11 @@ public class OneDayWeather  {
         return nightWeatherKind;
     }
 
-    public String getHour() {
-        return hour;
+    public String getDate() {
+        return date;
     }
 
-    public void setHour(String hour) {
-        this.hour = hour;
+    public void setDate(String hour) {
+        this.date = hour;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.weather;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,8 +29,8 @@ public class IntroActivity extends AppCompatActivity {
     private TextView weatherDescription;
     private Button skipBtn;
     private Gson gson;
-    private OneDayWeather curentDayWeather;
-    private List<OneDayWeather> allWeekWeather;
+    private WeatherForecast curentDayWeather;
+    private List<WeatherForecast> allWeekWeather;
     private LayoutInflater inflater;
     private ViewPager viewPager;
     private List<View> pages;
@@ -70,7 +68,7 @@ public class IntroActivity extends AppCompatActivity {
                     while((line = bf.readLine()) != null){
                         sb.append(line);
                     }
-                    OneDayWeather oneDayWeather = gson.fromJson(sb.toString(),OneDayWeather.class);
+                    WeatherForecast oneDayWeather = gson.fromJson(sb.toString(), WeatherForecast.class);
                     allWeekWeather.add(oneDayWeather);
                     Log.e("checkListSize",allWeekWeather.size() + "");
                 } catch (IOException e) {

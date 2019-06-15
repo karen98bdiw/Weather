@@ -17,6 +17,18 @@
         android:textColor="@color/comingDaysWeatherText"
         />
 
+    <TextView
+        android:id="@+id/hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YEREVAN"
+        android:textColor="@color/todaysWeaterBlock_text"
+        android:textSize="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        />
+
 
     <ImageView
         android:id="@+id/comingDaysWeaterKindIcon"

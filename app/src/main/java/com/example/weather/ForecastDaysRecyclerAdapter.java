@@ -16,10 +16,10 @@ import java.util.List;
 
 public class ForecastDaysRecyclerAdapter extends RecyclerView.Adapter<ForecastDaysRecyclerAdapter.ViewHolder> {
 
-    private List<OneDayWeather> data;
+    private List<WeatherForecast> data;
     private Context context;
 
-    public ForecastDaysRecyclerAdapter(List<OneDayWeather> data,Context context) {
+    public ForecastDaysRecyclerAdapter(List<WeatherForecast> data, Context context) {
         this.data = data;
         this.context = context;
     }
@@ -50,7 +50,11 @@ public class ForecastDaysRecyclerAdapter extends RecyclerView.Adapter<ForecastDa
                 .load(sb.toString())
                 .into(viewHolder.weatherKindIconView)
                   ;
-
+        String date = data.get(viewHolder.getAdapterPosition()).getDate();
+        if(date != null){
+            String hour = date.substring(11,16);
+            viewHolder.hourView.setText(hour);
+        }
 
     }
 
@@ -65,6 +69,7 @@ public class ForecastDaysRecyclerAdapter extends RecyclerView.Adapter<ForecastDa
         private ImageView weatherKindIconView;
         private TextView dayMinTempView;
         private TextView dayMaxTempView;
+        private TextView hourView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +78,7 @@ public class ForecastDaysRecyclerAdapter extends RecyclerView.Adapter<ForecastDa
             weatherKindIconView = itemView.findViewById(R.id.comingDaysWeaterKindIcon);
             dayMinTempView = itemView.findViewById(R.id.comingDaysMinTempView);
             dayMaxTempView = itemView.findViewById(R.id.comingDaysMaxTempView);
+            hourView = itemView.findViewById(R.id.hour);
         }
     }
 }

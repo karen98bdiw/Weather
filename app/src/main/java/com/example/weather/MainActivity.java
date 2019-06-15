@@ -2,11 +2,8 @@ package com.example.weather;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,27 +24,19 @@ import com.example.weather.FiveDayForecastWeatherAPIResponseInterface.MyList;
 import com.example.weather.FiveDayForecastWeatherAPIResponseInterface.Response;
 import com.google.gson.Gson;
 
-import org.reactivestreams.Subscription;
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import greyfox.rxnetwork.RxNetwork;
-import io.reactivex.Observable;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -75,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView curentDayWeatherCount;
     private ImageView curentDayWeatherIcon;
     private TextView lastUpdateDate;
-    private OneDayWeather gettedCurentDayWeather;
+    private WeatherForecast gettedCurentDayWeather;
     private Response responseForLandscape;
     private boolean orientationChanged;
     private Bundle saveWeatherBundle;
@@ -128,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
 
     //convert api resonse into the thath format which i will use for save and show
     //algorithm will choose all forecast for one day and return the middle results for day
-    public List<OneDayWeather> takeWeatherInUsefullFormat(Response repsonse){
+    public List<WeatherForecast> takeWeatherInUsefullFormat(Response repsonse){
 
         List<MyList> list = repsonse.getList();
-        List<OneDayWeather> daysWeatherWithMiddleCounts = new ArrayList<>();
+        List<WeatherForecast> daysWeatherWithMiddleCounts = new ArrayList<>();
         String curentDay;
         int dayMaxTempMiddleCount = 0;
         int dayMinTempMiddleCount = 0;
@@ -160,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                       dayMinTempMiddleCount = dayMaxTempMiddleCount / increment;
                   }
 
-                  daysWeatherWithMiddleCounts.add(new OneDayWeather( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(equalByWeekDayName-1).weather.get(0).getIcon(),list.get(equalByWeekDayName-1).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(0).getWeather().get(0).getIcon(),list.get(0).getWeather().get(0).getDescription()));
+                  daysWeatherWithMiddleCounts.add(new WeatherForecast( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(equalByWeekDayName-1).weather.get(0).getIcon(),list.get(equalByWeekDayName-1).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(0).getWeather().get(0).getIcon(),list.get(0).getWeather().get(0).getDescription()));
                   if(equalByWeekDayName >= list.size()){break;}
               }
               return daysWeatherWithMiddleCounts;
@@ -189,7 +178,7 @@ public void getFiveDaysForecast(){
 
                     @Override
                     public void onSuccess(Response response) {
-                        List<OneDayWeather> weekDaysWeather = takeWeatherInUsefullFormat(response);
+                        List<WeatherForecast> weekDaysWeather = takeWeatherInUsefullFormat(response);
                            saveWeatherInstance(weekDaysWeather);
                            showWeather(weekDaysWeather);
                            saveWeatherBundle = new Bundle();
@@ -217,13 +206,13 @@ public void getFiveDaysForecast(){
 
 
     //show weather characters on screen
-    public void showWeather(List<OneDayWeather> weekDaysWeather ){
+    public void showWeather(List<WeatherForecast> weekDaysWeather ){
 
 
         Log.e("call", "showWeather: " + "iamcall2" );
 
 
-        OneDayWeather curentDayWeather = weekDaysWeather.get(0);
+        WeatherForecast curentDayWeather = weekDaysWeather.get(0);
         curentDayWeatherCount.setText((curentDayWeather.getMaxTemp()+curentDayWeather.getMinTemp())/2+"");
 
         StringBuilder sb = new StringBuilder();
@@ -254,11 +243,11 @@ public void getFiveDaysForecast(){
     }
 
     //save apia result in iternal storage
-    public void saveWeatherInstance(List<OneDayWeather> weatherForecast){
+    public void saveWeatherInstance(List<WeatherForecast> weatherForecast){
         int increment = 0;
 
         try {
-            for(OneDayWeather o:weatherForecast){
+            for(WeatherForecast o:weatherForecast){
                 String writingWeather = gson.toJson(o);
                 Log.e("saved", "saveWeatherInstance: " + writingWeather );
                 File f = new File(MainActivity.this.getFilesDir(),"weather" + increment++ + ".wt");
@@ -272,9 +261,9 @@ public void getFiveDaysForecast(){
     }
 
     //load saved instance from internal storage
-    public List<OneDayWeather> loadWeatherSavedInstance(){
+    public List<WeatherForecast> loadWeatherSavedInstance(){
 
-        List<OneDayWeather> loadeWeatherList = new ArrayList<>();
+        List<WeatherForecast> loadeWeatherList = new ArrayList<>();
         File dir = getFilesDir();
         File[] files = dir.listFiles(new FilenameFilter() {
             @Override
@@ -296,7 +285,7 @@ public void getFiveDaysForecast(){
 
                 }
 
-                OneDayWeather weatherInstance = (OneDayWeather) gson.fromJson(sb.toString(),OneDayWeather.class);
+                WeatherForecast weatherInstance = (WeatherForecast) gson.fromJson(sb.toString(), WeatherForecast.class);
                 loadeWeatherList.add(weatherInstance);
 
                 Log.e("loading", "loadWeatherSavedInstance: " +sb.toString() );
@@ -356,11 +345,13 @@ public void getFiveDaysForecast(){
     }
 
     public void showForecastInHour(Response response){
-        List<OneDayWeather> hourWeatherList = new ArrayList<>();
+        List<WeatherForecast> hourWeatherList = new ArrayList<>();
         int incrment = 0;
         for(MyList m:response.getList()){
-            Log.e("resp",m.getMain().temp_max + " " + m.getMain().getTemp_min());
-            OneDayWeather curentHourWeather = new OneDayWeather(convertUnixToDayName(m.dt),m.weather.get(incrment).getIcon(),m.weather.get(incrment).getIcon(), ((int) Math.round(m.main.getTemp_min())), ((int) Math.round(m.main.getTemp_max())),"","");
+            Log.e("resp",m.getMain().temp_max + " " + m.getMain().getTemp_min() + " " + m.dt_txt);
+            WeatherForecast curentHourWeather = new WeatherForecast(convertUnixToDayName(m.dt),m.weather.get(incrment).getIcon(),m.weather.get(incrment).getIcon(), ((int) Math.round(m.main.getTemp_min())), ((int) Math.round(m.main.getTemp_max())),"","");
+            Log.e("dt", "showForecastInHour: " + " "+  m.dt +  " " + m.dt_txt + " " + convertUnixToDayName(m.dt));
+            curentHourWeather.setDate(m.dt_txt);
             hourWeatherList.add(curentHourWeather);
         }
 

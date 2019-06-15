@@ -28,6 +28,7 @@
             android:layout_alignParentTop="true"
             />
 
+
         <TextView
             android:id="@+id/todaysWeatherKindView"
             android:layout_width="wrap_content"
