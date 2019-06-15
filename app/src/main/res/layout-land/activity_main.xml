@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight=".50"
+        android:layout_weight=".30"
         android:background="@color/todaysWeaterBlockBackground"
         android:padding="20dp"
         >
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="YEREVAN"
             android:textColor="@color/todaysWeaterBlock_text"
-            android:textSize="50dp"
+            android:textSize="30dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             />
@@ -36,24 +36,27 @@
             android:textColor="@color/todaysWeaterBlock_text"
             android:textSize="30dp"
             android:layout_below="@id/cityNameView"
+            android:visibility="gone"
             />
 
         <ImageView
             android:id="@+id/todaysWeatherKindIconView"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:src="@drawable/sunny"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             />
 
         <TextView
             android:id="@+id/todaysWeatherCountView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="100dp"
+            android:textSize="30dp"
             android:text="3"
             android:textColor="@color/todaysWeaterBlock_text"
+            android:layout_alignBottom="@id/cityNameView"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             />
 
     </RelativeLayout>
@@ -62,7 +65,7 @@
         android:id="@+id/comingDaysWeatherRecyclerView"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight=".30"
+        android:layout_weight=".70"
         android:background="@drawable/border"
         >
 
@@ -73,6 +76,7 @@
         android:layout_height="0dp"
         android:layout_weight=".20"
         android:orientation="horizontal"
+        android:visibility="gone"
         >
 
         <Button

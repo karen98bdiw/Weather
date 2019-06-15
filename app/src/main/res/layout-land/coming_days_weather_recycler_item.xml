@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:minWidth="50dp"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    >
+
+    <TextView
+        android:id="@+id/comingDaysName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Thu"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/comingDaysWeatherText"
+        />
+
+    <TextView
+        android:id="@+id/hour"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Thu"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        android:textColor="@color/comingDaysWeatherText"
+        />
+
+
+    <ImageView
+        android:id="@+id/comingDaysWeaterKindIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sunny"
+        />
+
+    <TextView
+        android:id="@+id/comingDaysMaxTempView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="eee"
+        android:textSize="20dp"
+        android:textColor="@color/comingDaysWeatherText"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/comingDaysMinTempView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/comingDaysWeatherText"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

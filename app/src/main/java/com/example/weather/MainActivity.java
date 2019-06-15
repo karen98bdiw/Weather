@@ -1,16 +1,21 @@
 package com.example.weather;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -71,13 +76,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageView curentDayWeatherIcon;
     private TextView lastUpdateDate;
     private OneDayWeather gettedCurentDayWeather;
+    private Response responseForLandscape;
+    private boolean orientationChanged;
+    private Bundle saveWeatherBundle;
+    private OrientationEventListener orientationEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         curentDayWeatherKind = findViewById(R.id.todaysWeatherKindView);
         curentDayWeatherCount = findViewById(R.id.todaysWeatherCountView);
@@ -114,16 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        compositeDisposable.dispose();
-    }
 
 
     //convert api resonse into the thath format which i will use for save and show
@@ -192,11 +192,17 @@ public void getFiveDaysForecast(){
                         List<OneDayWeather> weekDaysWeather = takeWeatherInUsefullFormat(response);
                            saveWeatherInstance(weekDaysWeather);
                            showWeather(weekDaysWeather);
+                        Configuration configuration = getResources().getConfiguration();
 
-                        Log.e("call", "onSuccess: " + "iamcall3" );
+                        if(configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+                            Log.e("orient","changed");
+                                showForecastInHour(response);
+                            }
+
+                        }
 
 
-                    }
+
 
 
                     @Override
@@ -347,4 +353,26 @@ public void getFiveDaysForecast(){
             return true;
         }return false;
     }
+
+    public void showForecastInHour(Response response){
+        List<OneDayWeather> hourWeatherList = new ArrayList<>();
+        int incrment = 0;
+        for(MyList m:response.getList()){
+            Log.e("resp",m.getMain().temp_max + " " + m.getMain().getTemp_min());
+            OneDayWeather curentHour = new OneDayWeather(convertUnixToDayName(m.dt),m.weather.get(incrment).getIcon(),m.weather.get(incrment).getIcon(), ((int) Math.round(m.main.getTemp_min())), ((int) Math.round(m.main.getTemp_max())),"","");
+
+        }
+
+
+        recyclerView.setAdapter(new ForecastDaysRecyclerAdapter(hourWeatherList,MainActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
+
+
 }
