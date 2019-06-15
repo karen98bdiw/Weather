@@ -191,7 +191,7 @@ public void getFiveDaysForecast(){
                         Log.e("call", "onSuccess: " + "iamcall3" );
 
 
-                    }//                         showWeather(weekDaysWeather);
+                    }
 
 
                     @Override
@@ -203,43 +203,6 @@ public void getFiveDaysForecast(){
                 });
     }
 
-//    public void showIntro(){
-//        OneDayWeather curentDayWeather;
-//        List<View> introPages = new ArrayList<>();
-//
-//        ViewPager viewPager = new ViewPager(MainActivity.this);
-//
-//        viewPager.setAdapter(new IntroViewPagerAdapter(introPages));
-//
-////        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-////        View view = inflater.inflate(R.layout.app_intro_viewpager_item,null);
-////        TextView introText = view.findViewById(R.id.introText);
-////        introText.setText(curentDayWeather.getWeatherKind());
-////        LayoutInflater inflater1 = LayoutInflater.from(MainActivity.this);
-////        View view1 = inflater1.inflate(R.layout.app_intro_viewpager_item,null);
-////        TextView introNaghtText = view1.findViewById(R.id.introText);
-////        introNaghtText.setText(curentDayWeather.getNightWeatherKind());
-//
-//        for(int i = 0;i < 4;i++){
-//            LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-//            View view = inflater.inflate(R.layout.app_intro_viewpager_item,null);
-//            introPages.add(view);
-//
-//        view.findViewById(R.id.skipBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getFiveDaysForecast();
-//            }
-//        });
-//        }
-//
-//        viewPager.setAdapter(new IntroViewPagerAdapter(introPages));
-//
-//        viewPager.setCurrentItem(0);
-//
-//        setContentView(viewPager);
-//
-//    }
 
     public void showWeather(List<OneDayWeather> weekDaysWeather ){
 
@@ -346,9 +309,30 @@ public void getFiveDaysForecast(){
             getFiveDaysForecast();
             Toast.makeText(this, "Weather is updated", Toast.LENGTH_SHORT).show();
         }else{
-            Log.e("conect", "onCreate: " + false );
-            showWeather(loadWeatherSavedInstance());
-            Toast.makeText(this, "No conection,data cant be updated", Toast.LENGTH_SHORT).show();
+            if(isHaveSavedInstance()){
+                Log.e("conect", "onCreate: " + false );
+                showWeather(loadWeatherSavedInstance());
+                Toast.makeText(this, "No conection,data cant be updated", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "No conection", Toast.LENGTH_SHORT).show();
+            }
+
         }
+    }
+
+    public boolean isHaveSavedInstance(){
+        File file = getFilesDir();
+        File[] files = file.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".wt");
+
+
+            }
+        });
+
+        if(files.length > 0){
+            return true;
+        }return false;
     }
 }

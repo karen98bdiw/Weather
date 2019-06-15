@@ -70,7 +70,7 @@ public class IntroActivity extends AppCompatActivity {
                     }
                     OneDayWeather oneDayWeather = gson.fromJson(sb.toString(),OneDayWeather.class);
                     allWeekWeather.add(oneDayWeather);
-                    Log.e("hey",allWeekWeather.size() + "");
+                    Log.e("checkListSize",allWeekWeather.size() + "");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
