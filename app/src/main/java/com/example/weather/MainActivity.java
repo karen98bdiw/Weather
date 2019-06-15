@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
         compositeDisposable.dispose();
     }
 
+
+    //convert api resonse into the thath format which i will use for save and show
+    //algorithm will choose all forecast for one day and return the middle results for day
     public List<OneDayWeather> takeWeatherInUsefullFormat(Response repsonse){
 
         List<MyList> list = repsonse.getList();
@@ -164,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //simple function wich convert unix format date and return Week Day Name;
     public String convertUnixToDayName(int dt){
         Date date = new java.util.Date(dt*1000L);
         String d = new SimpleDateFormat("EE", Locale.ENGLISH).format(date);
@@ -171,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //call api request and get response about weather
 public void getFiveDaysForecast(){
     Log.e("call", "getFiveDaysForecast: "+"iamcalled1" );
         requestInterface.getApiResponse("524901","9328aa88a8e3e7336e7ca0df235a226a")
@@ -204,6 +209,7 @@ public void getFiveDaysForecast(){
     }
 
 
+    //show weather characters on screen
     public void showWeather(List<OneDayWeather> weekDaysWeather ){
 
 
@@ -240,6 +246,7 @@ public void getFiveDaysForecast(){
         gettedCurentDayWeather = curentDayWeather;
     }
 
+    //save apia result in iternal storage
     public void saveWeatherInstance(List<OneDayWeather> weatherForecast){
         int increment = 0;
 
@@ -257,6 +264,7 @@ public void getFiveDaysForecast(){
         }
     }
 
+    //load saved instance from internal storage
     public List<OneDayWeather> loadWeatherSavedInstance(){
 
         List<OneDayWeather> loadeWeatherList = new ArrayList<>();
@@ -293,6 +301,7 @@ public void getFiveDaysForecast(){
         return loadeWeatherList;
     }
 
+    //check conection
     public boolean isConected(){
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -303,6 +312,8 @@ public void getFiveDaysForecast(){
         }
     }
 
+
+    //in this function application check the internet conection and decide update result or show saved instance
     public void startProces(){
         if(isConected()){
             Log.e("conect", "onCreate: " + true );
@@ -320,6 +331,7 @@ public void getFiveDaysForecast(){
         }
     }
 
+    //this function return me answer-is i already have saved weather instance
     public boolean isHaveSavedInstance(){
         File file = getFilesDir();
         File[] files = file.listFiles(new FilenameFilter() {

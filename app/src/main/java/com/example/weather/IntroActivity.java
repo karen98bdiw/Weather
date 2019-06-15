@@ -48,6 +48,8 @@ public class IntroActivity extends AppCompatActivity {
         allWeekWeather = new ArrayList<>();
         pages = new ArrayList<>();
 
+
+        //here i check iternal storage because app will drow intro only if he have a saved instance
         File file = getFilesDir();
         File[] files = file.listFiles(new FilenameFilter() {
             @Override
@@ -88,7 +90,9 @@ public class IntroActivity extends AppCompatActivity {
 
     }
 
+    //this function drow the forecast for day and night in intro whith viewpager interface
     public void drowIntro(){
+        //drow day view;
         inflater =  LayoutInflater.from(IntroActivity.this);
         View dayWeatherView = inflater.inflate(R.layout.app_intro_viewpager_item,null);
         weatherKindIcon = dayWeatherView.findViewById(R.id.introImage);
@@ -105,6 +109,7 @@ public class IntroActivity extends AppCompatActivity {
         weatherDescription.setText("At day will be " + curentDayWeather.getWeatherKind());
         pages.add(dayWeatherView);
 
+        //drow night view
         inflater =  LayoutInflater.from(IntroActivity.this);
         View nightWeatherView = inflater.inflate(R.layout.app_intro_viewpager_item,null);
         weatherKindIcon = nightWeatherView.findViewById(R.id.introImage);
@@ -134,4 +139,6 @@ public class IntroActivity extends AppCompatActivity {
         viewPager.setAdapter(new IntroViewPagerAdapter(pages));
         viewPager.setCurrentItem(0);
     }
+
+
 }
