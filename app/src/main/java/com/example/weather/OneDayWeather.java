@@ -12,7 +12,6 @@ public class OneDayWeather  {
     private String nightIcon;
     private String nightWeatherKind;
     private String hour;
-    private List<OneHourWeather> dayWeatherByOur;
 
 
 

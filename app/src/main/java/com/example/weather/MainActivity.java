@@ -192,6 +192,7 @@ public void getFiveDaysForecast(){
                         List<OneDayWeather> weekDaysWeather = takeWeatherInUsefullFormat(response);
                            saveWeatherInstance(weekDaysWeather);
                            showWeather(weekDaysWeather);
+                           saveWeatherBundle = new Bundle();
                         Configuration configuration = getResources().getConfiguration();
 
                         if(configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -359,10 +360,9 @@ public void getFiveDaysForecast(){
         int incrment = 0;
         for(MyList m:response.getList()){
             Log.e("resp",m.getMain().temp_max + " " + m.getMain().getTemp_min());
-            OneDayWeather curentHour = new OneDayWeather(convertUnixToDayName(m.dt),m.weather.get(incrment).getIcon(),m.weather.get(incrment).getIcon(), ((int) Math.round(m.main.getTemp_min())), ((int) Math.round(m.main.getTemp_max())),"","");
-
+            OneDayWeather curentHourWeather = new OneDayWeather(convertUnixToDayName(m.dt),m.weather.get(incrment).getIcon(),m.weather.get(incrment).getIcon(), ((int) Math.round(m.main.getTemp_min())), ((int) Math.round(m.main.getTemp_max())),"","");
+            hourWeatherList.add(curentHourWeather);
         }
-
 
         recyclerView.setAdapter(new ForecastDaysRecyclerAdapter(hourWeatherList,MainActivity.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
