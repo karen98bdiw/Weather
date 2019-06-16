@@ -160,7 +160,8 @@ public class MainActivity extends AppCompatActivity {
                       dayMinTempMiddleCount = dayMinTempMiddleCount/increment;
                   }
 
-                  daysWeatherWithMiddleCounts.add(new WeatherForecast( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(Math.round(increment/2)).weather.get(0).getIcon(),list.get(Math.round(increment/2)).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(increment).getWeather().get(0).getIcon(),list.get(increment).getWeather().get(0).getDescription()));
+                  Log.e("weahterListSize",list.get(0).getWeather().size() + "");
+                  daysWeatherWithMiddleCounts.add(new WeatherForecast( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(Math.round(increment/2)).weather.get(0).getIcon(),list.get(Math.round(increment/2)).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(increment).getWeather().get(0).getIcon(),list.get(increment).getWeather().get(list.get(increment).getWeather().size()-1).getDescription()));
                   if(equalByWeekDayName >= list.size()){break;}
               }
               return daysWeatherWithMiddleCounts;
@@ -355,6 +356,7 @@ public void getFiveDaysForecast(){
         }return false;
     }
 
+    //this function created for app landscape view were app will show forecast by hour
     public void showForecastInHour(Response response){
         List<WeatherForecast> hourWeatherList = new ArrayList<>();
         int incrment = 0;
