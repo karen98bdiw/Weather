@@ -113,12 +113,12 @@ public class IntroActivity extends AppCompatActivity {
         weatherKindIcon = nightWeatherView.findViewById(R.id.introImage);
         StringBuilder sb2 = new StringBuilder();
         sb2.append("http://openweathermap.org/img/w/")
-                .append(curentDayWeather.getNightWeatherKind())
+                .append(curentDayWeather.getNightIcon())
                 .append(".png");
-        Log.e("iconU",sb2.toString());
+        Log.e("iconUN",sb2.toString());
         Glide
                 .with(IntroActivity.this)
-                .load(sb.toString())
+                .load(sb2.toString())
                 .into(weatherKindIcon);
         weatherDescription = nightWeatherView.findViewById(R.id.introText);
         weatherDescription.setText("At the night will be " +curentDayWeather.getNightWeatherKind());

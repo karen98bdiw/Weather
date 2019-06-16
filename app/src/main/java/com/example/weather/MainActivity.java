@@ -31,11 +31,16 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -45,6 +50,8 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         gson = new Gson();
         compositeDisposable = new CompositeDisposable();
 
+        Log.e("bag", "onCreate: " + convertUnixToDayName(1560718800) );
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -156,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //simple function wich convert unix format date and return Week Day Name;
+    //simple function wich convert unix format date and return Week Day Name and convert from GMT+4:00;
     public String convertUnixToDayName(int dt){
-        Date date = new java.util.Date(dt*1000L);
-        String d = new SimpleDateFormat("EE", Locale.ENGLISH).format(date);
+        Date date = new java.util.Date(dt*1000L-14400000);
+        String d = new SimpleDateFormat("EE", Locale.ENGLISH).format(date) ;
         return d;
     }
 
@@ -167,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     //call api request and get response about weather
 public void getFiveDaysForecast(){
     Log.e("call", "getFiveDaysForecast: "+"iamcalled1" );
-        requestInterface.getApiResponse("524901","9328aa88a8e3e7336e7ca0df235a226a")
+        requestInterface.getApiResponse("616052","9328aa88a8e3e7336e7ca0df235a226a")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<Response>() {
