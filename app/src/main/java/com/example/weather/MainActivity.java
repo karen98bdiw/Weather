@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         curentDayWeatherIcon = findViewById(R.id.todaysWeatherKindIconView);
         lastUpdateDate = findViewById(R.id.lastUpdateDate);
 
+        Log.e("create", "onCreate: " + "c");
 
         recyclerView = findViewById(R.id.comingDaysWeatherRecyclerView);
         gson = new Gson();
@@ -133,11 +134,12 @@ public class MainActivity extends AppCompatActivity {
         int dayMaxTempMiddleCount = 0;
         int dayMinTempMiddleCount = 0;
         int increment = 0;
-        int tool = 0;
+        int count = 0;
 
         int equalByWeekDayName = 0;
 
               for (int i = equalByWeekDayName; i < list.size(); i++) {
+                  count = 0;
                   dayMaxTempMiddleCount = 0;
                   dayMinTempMiddleCount = 0;
                   increment = 0;
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                   curentDay = convertUnixToDayName(list.get(equalByWeekDayName).dt);
                   for (int j = i; j < list.size(); j++) {
                       if (convertUnixToDayName(list.get(j).dt).equals(curentDay)) {
+
 
                           increment++;
                           dayMaxTempMiddleCount += list.get(j).getMain().temp_max;
@@ -154,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
                   }
                   if (increment > 0) {
                       dayMaxTempMiddleCount = dayMaxTempMiddleCount / increment;
-                      dayMinTempMiddleCount = dayMaxTempMiddleCount / increment;
+                      dayMinTempMiddleCount = dayMinTempMiddleCount/increment/10;
                   }
 
-                  daysWeatherWithMiddleCounts.add(new WeatherForecast( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(equalByWeekDayName-1).weather.get(0).getIcon(),list.get(equalByWeekDayName-1).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(0).getWeather().get(0).getIcon(),list.get(0).getWeather().get(0).getDescription()));
+                  daysWeatherWithMiddleCounts.add(new WeatherForecast( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(Math.round(increment/2)).weather.get(0).getIcon(),list.get(Math.round(increment/2)).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(increment).getWeather().get(0).getIcon(),list.get(increment).getWeather().get(0).getDescription()));
                   if(equalByWeekDayName >= list.size()){break;}
               }
               return daysWeatherWithMiddleCounts;
