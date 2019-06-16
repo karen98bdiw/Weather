@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                   }
                   if (increment > 0) {
                       dayMaxTempMiddleCount = dayMaxTempMiddleCount / increment;
-                      dayMinTempMiddleCount = dayMinTempMiddleCount/increment/10;
+                      dayMinTempMiddleCount = dayMinTempMiddleCount/increment;
                   }
 
                   daysWeatherWithMiddleCounts.add(new WeatherForecast( convertUnixToDayName(list.get(equalByWeekDayName-1).dt),list.get(Math.round(increment/2)).weather.get(0).getIcon(),list.get(Math.round(increment/2)).getWeather().get(0).getDescription(), dayMinTempMiddleCount, dayMaxTempMiddleCount,list.get(increment).getWeather().get(0).getIcon(),list.get(increment).getWeather().get(0).getDescription()));
